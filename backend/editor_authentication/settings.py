@@ -41,11 +41,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 3rd Party Apps
+    'rest_framework', # new
+    'rest_framework.authtoken', # new
+    'rest_auth', # new
+    'django.contrib.sites', # new
+    'allauth', # new
+    'allauth.account', # new
+    'allauth.socialaccount', # new
+    'rest_auth.registration', # new
+    'corsheaders', # new
+    'djoser',
     #local app
-    'core.apps.CoreConfig', # new
+    'core.apps.UserConfig', # new
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,8 +93,14 @@ WSGI_APPLICATION = 'editor_authentication.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'auth_system',
+        'USER':'postgres',
+        'PASSWORD':'@Lara ps25',
+        'HOST':'localhost',
+        'PORT':5433,
+
+
     }
 }
 
@@ -106,6 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -123,8 +143,54 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(REAL_BASE_DIR, 'editor', 'build', 'static')]
+STATIC_ROOT = os.path.join(REAL_BASE_DIR,"static")
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+DJOSER = {
+    'LOGIN_FIELD':'email',
+    'USER_CREATE_PASSWORD_RETYPE':True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION':True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
+    'SEND_CONFIRMATION_EMAIL':True,
+    'SET_USERNAME_RETYPE':True,
+    'SET_PASSWORD_RETYPE':True,
+    'PASSWORD_RESET_CONFIRM_URL':'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL':'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL':'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL':True,
+    'SERIALIZERS':{
+        'user_create':'core.serializers.UserCreateSerializer',
+        'user':'core.serializers.UserCreateSerializer',
+        'user_delete':'djoser.serializers.UserDeleteSerializer',
+    }
+     
+
+
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'core.UserAccount'
+
+# Specifies localhost port 3000 where the React
+# server will be running is safe to receive requests
+# from. All all of this.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'gowthamlara25@gmail.com'
+EMAIL_HOST_PASSWORD = 'lara ps25'
+EMAIL_USE_TLS = True
+
+
+SITE_ID = 1
+
