@@ -1,9 +1,68 @@
-import React from 'react'
+import React,{useState} from 'react';
+import {Link,Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {login} from "../actions/auth";
 
-function Login() {
+
+
+
+const Login=({login})=> {
+  const [formData,setFormData] = useState({
+    email:'',
+    password:''
+  });
+  const {email,password}=formData;
+  const onChange = e => setFormData({...formData,[e.target.name]:e.target.value});
+  const onSubmit = e => {
+    e.preventDefault();
+    login(email,password);
+    //login()
+  }
   return (
-    <div>login</div>
-  )
-}
+    <div className='container mt-5'>
+      <h1>Sign In</h1>
+      <p>Sign into your account</p>
+      <form onSubmit={e=>onSubmit(e)}>
+          <div className='form-group'>
+            <input 
+            className='form-control' 
+            type='email'
+            placeholder='email'
+            name='email'
+            value={email}
+            onChange={e=>onChange(e)}
+            required 
+            />
+          </div>
+          <br />
+          <div className='form-group'>
+            <input 
+            className='form-control' 
+            type='password'
+            placeholder='password'
+            name='password'
+            value={password}
+            onChange={e=>onChange(e)}
+            minLength='6'
+            required 
+            />
+          </div>
+          <br />
+          <button className='btn btn-dark' type='submit'>LogIn</button>
+      </form>
+      <p className='mt-3'>
+        Don't have an account? <Link to='/signup'>Sign Up</Link>
+      </p>
+      <p className='mt-3'>
+        Forgot your password? <Link to='/reset-password'>Reset Password</Link>
+      </p>
 
-export default Login;
+    </div>
+  )
+};
+
+// const mapStateToProps = state => ({
+
+// })
+
+export default connect(null,{login})(Login);
