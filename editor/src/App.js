@@ -8,12 +8,13 @@ import ResetPasswordConfirm from './views/ResetPasswordConfirm';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // new imports
 import store from './store';
 import {Provider} from 'react-redux';
-
+import Layout from './hocs/Layout';
 
 function App() {
   return(
   <Provider store={store}>
     <Router>
+    <Layout>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/page" element={<Page />} />
@@ -23,6 +24,7 @@ function App() {
       <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordConfirm />} />
       <Route path="/activate/:uid/:token" element={<Activate/>} />
     </Routes>
+    </Layout>
     </Router>
   </Provider>
   );
