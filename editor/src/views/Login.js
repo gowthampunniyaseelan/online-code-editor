@@ -22,7 +22,7 @@ const Login = ({ login, isAuthenticated }) => {
 
     const continueWithGoogle = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/page`)
 
             window.location.replace(res.data.authorization_url);
         } catch (err) {
@@ -39,9 +39,11 @@ const Login = ({ login, isAuthenticated }) => {
 
         }
     };
-
-    if (isAuthenticated) {
-        return <Navigate to='/' />
+// if (googleAuthenticate){
+//     return <Navigate to='/page' />
+// }
+if (isAuthenticated) {
+        return <Navigate to='/page' />
     }
 
     return (
@@ -60,6 +62,7 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                     />
                 </div>
+                <br />
                 <div className='form-group'>
                     <input
                         className='form-control'
@@ -72,13 +75,14 @@ const Login = ({ login, isAuthenticated }) => {
                         required
                     />
                 </div>
-                <button className='btn btn-primary' type='submit'>Login</button>
+                <br />
+                <button className='btn btn-dark' type='submit'>Login</button>
             </form>
-            <button className='btn btn-danger mt-3' onClick={continueWithGoogle}>
+            <button className='btn btn-dark mt-3' onClick={continueWithGoogle}>
                 Continue With Google
             </button>
             <br />
-            <button className='btn btn-primary mt-3' onClick={continueWithFacebook}>
+            <button className='btn btn-dark mt-3' onClick={continueWithFacebook}>
                 Continue With Facebook
             </button>
             <p className='mt-3'>

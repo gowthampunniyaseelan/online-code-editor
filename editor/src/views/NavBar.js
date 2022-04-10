@@ -1,9 +1,15 @@
-import React,{Fragment} from 'react';
-import {Link} from 'react-router-dom';
+import React,{Fragment,useState} from 'react';
+import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
 
 const NavBar=({logout,isAuthenticated})=> {
+
+const [redirect,setRedirect] = useState(false);
+const logout_user = ()=>{
+  logout();
+  setRedirect(true);
+}
 const guestLinks = ()=>(
 <Fragment>
 <li className="nav-item">
@@ -17,12 +23,14 @@ const guestLinks = ()=>(
   const authLinks = () => (
 
       <li className="nav-item">
-        <a className="nav-link" href="#!" onClick={logout}>Logout</a>
+        <a className="nav-link" href="#!" onClick={logout_user}>Logout</a>
       </li>
 
   );
 
   return (
+    <Fragment>
+   
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <Link className="navbar-brand" to="/">Editor</Link>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +45,8 @@ const guestLinks = ()=>(
     </ul>
   </div>
 </nav>
+   {redirect ? <Navigate to='/'/> : <Fragment></Fragment>}
+ </Fragment>
   )
 }
 
