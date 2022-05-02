@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require("./models/user.model");
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 const app = express();
 app.use(cors())
 app.use(express.json())
@@ -18,10 +19,11 @@ app.listen(port,()=>{
 
 app.post('/api/signup',async (req,res)=>{
   try{
+    const newPassword = await bcrypt.hash(req.body.password,10)
     const user = await User.create({
       name:req.body.name,
       email:req.body.email,
-      password:req.body.password
+      password:newPassword
     })
     res.json({status:"ok"})
   }catch(err){
@@ -31,10 +33,13 @@ app.post('/api/signup',async (req,res)=>{
 
 app.post('/api/login',async (req,res)=>{
     const user = await User.findOne({
-      email:req.body.email,
-      password:req.body.password
+      email:req.body.email
     })
-    if(user){
+    if(!user){
+      return res.json({status:"error",error:"User not found"})
+    }
+    const isPasswordValid = await bcrypt.compare(req.body.password,user.password)
+    if(isPasswordValid){
       const token = jwt.sign({
         email:user.email
       },"secret123")
