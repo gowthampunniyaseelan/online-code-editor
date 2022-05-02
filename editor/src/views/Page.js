@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Editor from "../components/Editor";
 
@@ -11,6 +12,7 @@ export function Page(){
   const [css, setCss] = useState("");
   const [js, setJs] = useState("");
   const [srcDoc, setSrcDoc] = useState(``);
+  const navigate = useNavigate();
   
 
   const onTabClick = (editorName) => {
@@ -34,9 +36,19 @@ export function Page(){
     return () => clearTimeout(timeOut);
   }, [html, css, js]);
 
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    alert('Are you sure you want to logout?')
+    const token = localStorage.removeItem("token");
+    navigate("/");
+  }
+
   return (
     <div className="App">
       <p>Welcome to the edior</p>
+      <form onSubmit={handleSubmit}>
+        <input className="button" type="submit" value="Logout"/>
+      </form>
       <div className="tab-button-container">
         <Button
           backgroundColor={activeButton === "html" ? "grey" : ""}
