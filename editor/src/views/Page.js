@@ -39,7 +39,6 @@ export function Page(){
   const handleSubmit=(e)=>{
     e.preventDefault();
     alert('Are you sure you want to logout?')
-    const token = localStorage.removeItem("token");
     navigate("/");
   }
 
