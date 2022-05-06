@@ -9,7 +9,7 @@ const Signup = () => {
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    const response = await fetch('/api/signup',{
+    const response = await fetch('http://localhost:8000/api/signup',{
       method:'POST',
       headers:{
         "Content-Type":"application/json"
