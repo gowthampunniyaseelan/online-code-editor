@@ -54,6 +54,6 @@ if(process.env.NODE_ENV === "production"){
   app.use(express.static("editor/build"))
   const path = require("path")
   app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,"editor,build,index.html"))
+    res.sendFile(path.resolve(__dirname,"editor,build,index.html"))
   })
 }
