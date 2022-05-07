@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const User = require("./models/user.model");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const path = require("path");
 const app = express();
 app.use(cors())
 app.use(express.json())
