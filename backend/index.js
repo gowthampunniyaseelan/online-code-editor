@@ -3,7 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require("./models/user.model");
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const path = require("path");
 const app = express();
 app.use(cors())
 app.use(express.json())
@@ -52,8 +53,7 @@ app.post('/api/login',async (req,res)=>{
 
 if(process.env.NODE_ENV === "production"){
   app.use(express.static("editor/build"))
-  const path = require("path")
   app.get("*",(req,res)=>{
-    res.sendFile(path.resolve(__dirname,"editor,build,index.html"))
+    res.sendFile(path.resolve(__dirname,"editor","build","index.html"))
   })
 }
