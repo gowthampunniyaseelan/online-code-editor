@@ -11,9 +11,9 @@ app.use(express.json())
 
 mongoose.connect("mongodb+srv://gowtham:%40Laraps25@cluster0.jtwam.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
-const port = 8000
-app.listen(port,()=>{
-  console.log(`Node.js running on port: ${port}`)
+const PORT = process.env.PORT || 5000
+app.listen(PORT,()=>{
+  console.log(`Node.js running on port: ${PORT}`)
 })
 
 
@@ -48,3 +48,12 @@ app.post('/api/login',async (req,res)=>{
       return res.json({status:"Invalid email or password",user:false})
     }
 })
+
+
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static("editor/build"))
+  const path = require("path")
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"editor,build,index.html"))
+  })
+}
