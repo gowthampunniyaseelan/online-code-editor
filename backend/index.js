@@ -49,11 +49,3 @@ app.post('/api/login',async (req,res)=>{
       return res.json({status:"Invalid email or password",user:false})
     }
 })
-
-
-if(process.env.NODE_ENV === "production"){
-  app.use(express.static("editor/build"))
-  app.get("*",(req,res)=>{
-    res.sendFile(path.resolve(__dirname,"editor","build","index.html"))
-  })
-}
