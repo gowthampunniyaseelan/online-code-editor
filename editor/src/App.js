@@ -1,11 +1,14 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Page } from './views/Page';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // new imports
 import Signup from './authentication/Signup';
 import Login from './authentication/Login';
 import Home from './Home';
 function App() {
-  const [isAuthenticated,setIsAuthenticated] = useState(()=>{localStorage.getItem('token')});
+  const [isAuthenticated,setIsAuthenticated] = useState(false);
+  useEffect(()=>{
+      setIsAuthenticated(localStorage.getItem('token'));
+  },[isAuthenticated])
   return(
     <Router>
     <Routes>
