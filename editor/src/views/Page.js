@@ -44,7 +44,7 @@ export function Page(){
 
   return (
     <div className="App">
-      <p>Welcome to the edior</p>
+      <p>Welcome to the editor</p>
       <form onSubmit={handleSubmit}>
         <input className="button" type="submit" value="Logout"/>
       </form>
