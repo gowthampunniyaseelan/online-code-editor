@@ -9,7 +9,7 @@ const Signup = () => {
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    const response = await fetch('https://gowtham-editor.herokuapp.com/api/signup',{
+    const response = await fetch('https://gowtham-editorss.onrender.com/api/signup',{
       method:'POST',
       headers:{
         "Content-Type":"application/json"

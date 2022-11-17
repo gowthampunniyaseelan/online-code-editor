@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    const response = await fetch('https://gowtham-editor.herokuapp.com/api/login',{
+    const response = await fetch('https://gowtham-editorss.onrender.com/api/login',{
       method:'POST',
       headers:{
         "Content-Type":"application/json"
